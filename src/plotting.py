@@ -1,0 +1,23 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+
+
+def plot_equity_curve(trades: pd.DataFrame, save_path: str):
+    """
+    Plot cumulative R multiple over time.
+    """
+
+    equity = trades["R Result"].cumsum()
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(equity)
+
+    plt.title("Equity Curve")
+    plt.xlabel("Trade Number")
+    plt.ylabel("Cumulative R")
+
+    plt.grid(True)
+
+    plt.tight_layout()
+    plt.savefig(save_path)
+    plt.close()
