@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.performance import backtest_stats, trades_per_year
+from src.performance import backtest_stats, trades_per_year, exit_reason_breakdown
 
 
 def save_backtest_results(
@@ -23,3 +23,6 @@ def save_backtest_results(
 
     yearly_trades = trades_per_year(trades)
     yearly_trades.to_csv(output_dir / f"{symbol}_trades_per_year.csv", index=False)
+
+    exit_reasons = exit_reason_breakdown(trades)
+    exit_reasons.to_csv(output_dir / f"{symbol}_exit_reasons.csv", index=False)

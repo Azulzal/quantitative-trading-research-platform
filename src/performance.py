@@ -58,3 +58,15 @@ def trades_per_year(trades: pd.DataFrame) -> pd.DataFrame:
     trades["Year"] = trades["Entry Time"].dt.year
 
     return trades.groupby("Year").size().reset_index(name="Trades")
+
+
+def exit_reason_breakdown(trades: pd.DataFrame) -> pd.DataFrame:
+    if len(trades) == 0 or "Exit Reason" not in trades.columns:
+        return pd.DataFrame(columns=["Exit Reason", "Count"])
+
+    return (
+        trades["Exit Reason"]
+        .value_counts()
+        .rename_axis("Exit Reason")
+        .reset_index(name="Count")
+    )
