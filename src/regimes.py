@@ -6,7 +6,10 @@ from src.timeframes import build_weekly_data, build_monthly_data
 BULLISH_REGIMES = ["Accumulation", "Reaccumulation"]
 
 
-def build_structure_timeframes(daily):
+def build_structure_timeframes(daily: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """
+    Build daily, weekly and monthly structure dataframes.
+    """
     weekly = build_weekly_data(daily)
     monthly = build_monthly_data(daily)
 
@@ -17,7 +20,10 @@ def build_structure_timeframes(daily):
     return daily_structure, weekly_structure, monthly_structure
 
 
-def get_latest_regime(structure_df):
+def get_latest_regime(structure_df: pd.DataFrame) -> str:
+    """
+    Return the latest non-empty structure regime.
+    """
     latest = structure_df["Structure Regime"].dropna()
 
     if len(latest) == 0:
@@ -26,7 +32,10 @@ def get_latest_regime(structure_df):
     return latest.iloc[-1]
 
 
-def prepare_regime_data(daily):
+def prepare_regime_data(daily: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """
+    Build and classify daily, weekly and monthly market regimes.
+    """
     daily_s, weekly_s, monthly_s = build_structure_timeframes(daily)
 
     daily_s = classify_structure_regime(daily_s)
@@ -36,30 +45,10 @@ def prepare_regime_data(daily):
     return daily_s, weekly_s, monthly_s
 
 
-def regime_screener(symbol, download_daily_data):
-    daily = download_daily_data(symbol)
-
-    daily_s, weekly_s, monthly_s = prepare_regime_data(daily)
-
-    daily_regime = get_latest_regime(daily_s)
-    weekly_regime = get_latest_regime(weekly_s)
-    monthly_regime = get_latest_regime(monthly_s)
-
-    allowed = (
-        daily_regime in BULLISH_REGIMES
-        and weekly_regime in BULLISH_REGIMES
-        and monthly_regime in BULLISH_REGIMES
-    )
-
-    return {
-        "Ticker": symbol,
-        "Daily Regime": daily_regime,
-        "Weekly Regime": weekly_regime,
-        "Monthly Regime": monthly_regime,
-        "Trade Allowed": allowed,
-    }
-
-def get_regime_at_time(structure_df, current_time):
+def get_regime_at_time(structure_df: pd.DataFrame, current_time: pd.Timestamp) -> str:
+    """
+    Return the latest completed regime available before the current timestamp.
+    """
     current_date = pd.Timestamp(current_time).tz_localize(None).normalize()
     past = structure_df.loc[:current_date].iloc[:-1]
 
@@ -74,7 +63,15 @@ def get_regime_at_time(structure_df, current_time):
     return regimes.iloc[-1]
 
 
-def check_precomputed_regimes(daily_s, weekly_s, monthly_s, current_time):
+def check_precomputed_regimes(
+    daily_s: pd.DataFrame,
+    weekly_s: pd.DataFrame,
+    monthly_s: pd.DataFrame,
+    current_time: pd.Timestamp,
+) -> dict:
+    """
+    Check whether daily, weekly and monthly regimes are bullish at a historical time.
+    """
     daily_regime = get_regime_at_time(daily_s, current_time)
     weekly_regime = get_regime_at_time(weekly_s, current_time)
     monthly_regime = get_regime_at_time(monthly_s, current_time)
