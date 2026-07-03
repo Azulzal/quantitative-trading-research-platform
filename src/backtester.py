@@ -10,6 +10,18 @@ RISK_ATR_MULTIPLIER = 1.5
 CANCEL_ATR_MULTIPLIER = 2
 ORDER_EXPIRY_DAYS = 8
 
+def reset_signal_state() -> dict:
+    """Reset pending signal and setup state."""
+    return {
+        "signal_high": None,
+        "signal_time": None,
+        "signal_atr": None,
+        "order_created_index": None,
+        "pullback_seen": False,
+        "reclaim_seen": False,
+    }
+
+
 def backtest_daily_strategy(symbol: str) -> pd.DataFrame:
     """
     Backtest the daily quantitative trading strategy for a single ticker.
