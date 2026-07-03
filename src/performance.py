@@ -1,4 +1,20 @@
-def backtest_stats(trades):
+import pandas as pd
+
+
+def backtest_stats(trades: pd.DataFrame) -> dict:
+    """
+    Calculate summary statistics from a backtest trade log.
+
+    Parameters
+    ----------
+    trades : pd.DataFrame
+        Trade log containing an R Result column.
+
+    Returns
+    -------
+    dict
+        Summary statistics including trade count, win rate and R-multiple results.
+    """
     if len(trades) == 0:
         return {
             "Trades": 0,
