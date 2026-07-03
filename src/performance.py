@@ -4,16 +4,6 @@ import pandas as pd
 def backtest_stats(trades: pd.DataFrame) -> dict:
     """
     Calculate summary statistics from a backtest trade log.
-
-    Parameters
-    ----------
-    trades : pd.DataFrame
-        Trade log containing an R Result column.
-
-    Returns
-    -------
-    dict
-        Summary statistics including trade count, win rate and R-multiple results.
     """
     if len(trades) == 0:
         return {
@@ -26,11 +16,23 @@ def backtest_stats(trades: pd.DataFrame) -> dict:
             "Total R": 0,
             "Best R": None,
             "Worst R": None,
+            "Max Drawdown": None,
+            "Profit Factor": None,
         }
 
-    wins = trades[trades["R Result"] > 0]
-    losses = trades[trades["R Result"] < 0]
-    breakevens = trades[trades["R Result"] == 0]
+    r = trades["R Result"]
+
+    wins = trades[r > 0]
+    losses = trades[r < 0]
+    breakevens = trades[r == 0]
+
+    equity = r.cumsum()
+    drawdown = equity - equity.cummax()
+
+    gross_profit = wins["R Result"].sum()
+    gross_loss = abs(losses["R Result"].sum())
+
+    profit_factor = None if gross_loss == 0 else gross_profit / gross_loss
 
     return {
         "Trades": len(trades),
@@ -38,8 +40,21 @@ def backtest_stats(trades: pd.DataFrame) -> dict:
         "Losses": len(losses),
         "Breakevens": len(breakevens),
         "Win Rate": len(wins) / len(trades),
-        "Average R": trades["R Result"].mean(),
-        "Total R": trades["R Result"].sum(),
-        "Best R": trades["R Result"].max(),
-        "Worst R": trades["R Result"].min(),
+        "Average R": r.mean(),
+        "Total R": r.sum(),
+        "Best R": r.max(),
+        "Worst R": r.min(),
+        "Max Drawdown": drawdown.min(),
+        "Profit Factor": profit_factor,
     }
+
+
+def trades_per_year(trades: pd.DataFrame) -> pd.DataFrame:
+    """
+    Count number of trades taken per year.
+    """
+    trades = trades.copy()
+    trades["Entry Time"] = pd.to_datetime(trades["Entry Time"])
+    trades["Year"] = trades["Entry Time"].dt.year
+
+    return trades.groupby("Year").size().reset_index(name="Trades")
