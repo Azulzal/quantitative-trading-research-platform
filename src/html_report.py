@@ -14,6 +14,51 @@ def generate_html_report(symbol: str, stats: dict, results_dir: str = "results")
 
     <head>
     <title>{symbol} Backtest Report</title>
+
+    <style>
+        body {{
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            color: #222;
+            background-color: #f8f9fb;
+        }}
+
+        h1 {{
+            color: #111827;
+        }}
+
+        h2 {{
+            margin-top: 35px;
+            color: #1f2937;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 6px;
+        }}
+
+        table {{
+            border-collapse: collapse;
+            width: 100%;
+            background-color: white;
+        }}
+
+        th, td {{
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }}
+
+        th {{
+            background-color: #111827;
+            color: white;
+        }}
+
+        img {{
+            background-color: white;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }}
+    </style>
+
     </head>
 
     <body>
