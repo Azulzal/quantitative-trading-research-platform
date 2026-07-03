@@ -21,3 +21,26 @@ def plot_equity_curve(trades: pd.DataFrame, save_path: str):
     plt.tight_layout()
     plt.savefig(save_path)
     plt.close()
+
+def plot_drawdown(trades: pd.DataFrame, save_path: str):
+    """
+    Plot drawdown based on cumulative R.
+    """
+
+    equity = trades["R Result"].cumsum()
+
+    running_max = equity.cummax()
+    drawdown = equity - running_max
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(drawdown)
+
+    plt.title("Drawdown")
+    plt.xlabel("Trade Number")
+    plt.ylabel("Drawdown (R)")
+
+    plt.grid(True)
+
+    plt.tight_layout()
+    plt.savefig(save_path)
+    plt.close()
