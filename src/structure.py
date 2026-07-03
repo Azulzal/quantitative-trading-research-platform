@@ -1,14 +1,27 @@
 import numpy as np
+import pandas as pd
 
 
-def add_confirmed_structure(df):
+def add_confirmed_structure(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Identify confirmed bullish and bearish market structure breaks.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        OHLCV market data.
+
+    Returns
+    -------
+    pd.DataFrame
+        Market data with structure break, count and confirmed high/low columns.
+    """
     df = df.copy()
 
     df["Bull Break"] = False
     df["Bear Break"] = False
     df["Bull Count"] = 0
     df["Bear Count"] = 0
-
     df["Candidate High"] = np.nan
     df["Candidate Low"] = np.nan
     df["Confirmed High"] = np.nan
@@ -16,7 +29,6 @@ def add_confirmed_structure(df):
 
     candidate_high = df["High"].iloc[0]
     candidate_low = df["Low"].iloc[0]
-
     confirmed_high = None
     confirmed_low = None
     bull_count = 0
@@ -43,10 +55,8 @@ def add_confirmed_structure(df):
         if confirmed_high is not None and candle["Close"] > confirmed_high:
             bull_count += 1
             bear_count = 0
-
             df.loc[df.index[i], "Bull Break"] = True
             df.loc[df.index[i], "Bull Count"] = bull_count
-
             confirmed_low = candidate_low
             candidate_high = candle["High"]
             candidate_low = candle["Low"]
@@ -55,10 +65,8 @@ def add_confirmed_structure(df):
         if confirmed_low is not None and candle["Close"] < confirmed_low:
             bear_count += 1
             bull_count = 0
-
             df.loc[df.index[i], "Bear Break"] = True
             df.loc[df.index[i], "Bear Count"] = bear_count
-
             confirmed_high = candidate_high
             candidate_high = candle["High"]
             candidate_low = candle["Low"]
@@ -72,7 +80,26 @@ def add_confirmed_structure(df):
     return df
 
 
-def classify_structure_regime(df, lookback_breaks=10):
+def classify_structure_regime(
+    df: pd.DataFrame,
+    lookback_breaks: int = 10,
+) -> pd.DataFrame:
+    """
+    Classify market structure into accumulation, reaccumulation,
+    distribution or redistribution regimes.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Market data containing Bull Break, Bear Break, Bull Count and Bear Count columns.
+    lookback_breaks : int
+        Number of recent structure breaks to consider.
+
+    Returns
+    -------
+    pd.DataFrame
+        Market data with a Structure Regime column.
+    """
     df = df.copy()
     df["Structure Regime"] = None
 
@@ -103,15 +130,17 @@ def classify_structure_regime(df, lookback_breaks=10):
             last_major_side = "bear"
 
         if current_side == "bull":
-            if last_major_side == "bear" and current_count < 3:
-                regime = "Redistribution"
-            else:
-                regime = "Accumulation"
+            regime = (
+                "Redistribution"
+                if last_major_side == "bear" and current_count < 3
+                else "Accumulation"
+            )
         else:
-            if last_major_side == "bull" and current_count <= 2:
-                regime = "Reaccumulation"
-            else:
-                regime = "Distribution"
+            regime = (
+                "Reaccumulation"
+                if last_major_side == "bull" and current_count <= 2
+                else "Distribution"
+            )
 
         df.loc[df.index[i], "Structure Regime"] = regime
 
