@@ -1,92 +1,136 @@
 # Quantitative Trading Research Platform
 
-A Python-based quantitative trading research platform for developing, backtesting and evaluating systematic equity trading strategies using historical market data.
+A modular quantitative research framework for developing, testing and evaluating systematic equity trading strategies using Python.
 
-The goal of this project is to build a professional research workflow similar to those used by quantitative researchers. Rather than focusing on a single trading strategy, the project is designed as a framework for collecting market data, testing hypotheses and analysing strategy performance.
+The platform automates the complete research workflow—from downloading historical market data through to strategy evaluation, performance analysis and HTML report generation.
 
 ---
 
 ## Features
 
-- Historical market data collection using yfinance
-- Multi-timeframe market analysis (Monthly, Weekly, Daily and Hourly)
-- Technical indicators including EMA and ATR
-- Automated backtesting engine
-- Risk management simulation
-- Trade logging and performance evaluation
-- Modular Python architecture for future strategy development
+- Historical market data collection using Yahoo Finance
+- Technical indicators (EMA, ATR)
+- Multi-timeframe analysis
+- Market structure detection
+- Market regime classification
+- Rule-based backtesting engine
+- ATR-based risk management
+- Single-stock and multi-stock backtesting
+- Automated performance reporting
+- Equity curve and drawdown visualisation
+- HTML report generation
+- Configurable stock universes
+
+---
+
+## Repository Structure
+
+```text
+quantitative-trading-research-platform/
+
+├── docs/
+├── notebooks/
+├── results/
+├── src/
+│   ├── backtester.py
+│   ├── data.py
+│   ├── html_report.py
+│   ├── indicators.py
+│   ├── multi_report.py
+│   ├── performance.py
+│   ├── plotting.py
+│   ├── regimes.py
+│   ├── reporting.py
+│   ├── structure.py
+│   ├── timeframes.py
+│   └── universe.py
+│
+├── run_backtest.py
+├── run_multi_backtest.py
+├── README.md
+├── LICENSE
+└── .gitignore
+```
+
+---
+
+## Quick Start
+
+Clone the repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/quantitative-trading-research-platform.git
+cd quantitative-trading-research-platform
+```
+
+Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+Run a single-stock backtest
+
+```bash
+python run_backtest.py
+```
+
+Run a multi-stock backtest
+
+```bash
+python run_multi_backtest.py
+```
+
+---
+
+## Example Outputs
+
+The framework automatically generates:
+
+- Trade logs
+- Performance summaries
+- Equity curve charts
+- Drawdown charts
+- Exit reason summaries
+- HTML reports
+
+Outputs are saved to the `results/` directory.
+
+---
+
+## Current Research Pipeline
+
+1. Download historical market data
+2. Calculate technical indicators
+3. Build weekly and monthly timeframes
+4. Detect market structure
+5. Classify market regimes
+6. Execute trading strategy
+7. Evaluate performance
+8. Generate charts and HTML reports
 
 ---
 
 ## Technologies
 
 - Python
-- pandas
-- numpy
-- matplotlib
+- Pandas
+- NumPy
+- Matplotlib
 - yfinance
-- Jupyter Notebook
-- Git & GitHub
+- TA-Lib / ta
+- Git
+- GitHub
 
 ---
 
-## Current Strategy
+## Future Work
 
-The current research focuses on a trend-following systematic trading strategy using:
-
-- Monthly trend confirmation
-- Weekly trend alignment
-- Daily market structure
-- Hourly trade entries
-- EMA trend filters
-- ATR-based risk management
-
-The strategy is currently being researched and refined through historical backtesting.
-
----
-
-## Repository Structure
-
-```
-notebooks/
-    strategy_research.ipynb
-
-src/
-    data.py
-    indicators.py
-    strategy.py
-    backtester.py
-    performance.py
-
-results/
-    backtest reports
-    charts
-    performance metrics
-
-docs/
-    project documentation
-```
-
----
-
-## Future Development
-
-Planned improvements include:
-
-- Portfolio backtesting
-- Walk-forward analysis
+- Full S&P 100 and S&P 500 universe support
 - Parameter optimisation
-- Performance dashboards
-- Additional trading strategies
-- Machine learning experiments
-- Broker API integration
-
----
-
-## Author
-
-Michael Kennedy
-
-Bachelor of Engineering (Honours)
-Electrical and Electronic Engineering
-Victoria University of Wellington
+- Walk-forward analysis
+- Monte Carlo robustness testing
+- Portfolio optimisation
+- Parallel backtesting
+- Unit testing
+- Interactive dashboard
