@@ -1,0 +1,227 @@
+
+<html>
+<head>
+<title>Multi-Stock Backtest Report</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        color: #222;
+        background-color: #f8f9fb;
+    }
+
+    h1 {
+        color: #111827;
+    }
+
+    h2 {
+        margin-top: 35px;
+        color: #1f2937;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 6px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background-color: white;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #111827;
+        color: white;
+    }
+
+    img {
+        background-color: white;
+        padding: 10px;
+        border: 1px solid #ddd;
+        margin-top: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Multi-Stock Strategy Report</h1>
+
+<h2>Performance Summary</h2>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Trades</th>
+      <th>Wins</th>
+      <th>Losses</th>
+      <th>Breakevens</th>
+      <th>Win Rate</th>
+      <th>Average R</th>
+      <th>Total R</th>
+      <th>Best R</th>
+      <th>Worst R</th>
+      <th>Max Drawdown</th>
+      <th>Profit Factor</th>
+      <th>Ticker</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>8</td>
+      <td>3</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0.375000</td>
+      <td>0.967189</td>
+      <td>7.737511</td>
+      <td>5.939226</td>
+      <td>-1.000000</td>
+      <td>-1.000000</td>
+      <td>4.868755</td>
+      <td>AAPL</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0.200000</td>
+      <td>0.006677</td>
+      <td>0.033384</td>
+      <td>3.033384</td>
+      <td>-1.000000</td>
+      <td>-2.000000</td>
+      <td>1.011128</td>
+      <td>MSFT</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.500000</td>
+      <td>2.853698</td>
+      <td>11.414792</td>
+      <td>8.040788</td>
+      <td>-1.000000</td>
+      <td>-1.000000</td>
+      <td>12.414792</td>
+      <td>NVDA</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>AMZN</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0.166667</td>
+      <td>-0.288295</td>
+      <td>-1.729771</td>
+      <td>1.189552</td>
+      <td>-1.919323</td>
+      <td>-1.919323</td>
+      <td>0.407475</td>
+      <td>META</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>0.285714</td>
+      <td>0.532730</td>
+      <td>3.729110</td>
+      <td>7.141518</td>
+      <td>-2.059256</td>
+      <td>-2.059256</td>
+      <td>1.918668</td>
+      <td>GOOGL</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.666667</td>
+      <td>4.375430</td>
+      <td>13.126291</td>
+      <td>9.725176</td>
+      <td>-1.000000</td>
+      <td>-1.000000</td>
+      <td>14.126291</td>
+      <td>AVGO</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>0</td>
+      <td>6</td>
+      <td>2</td>
+      <td>0.000000</td>
+      <td>-0.750000</td>
+      <td>-6.000000</td>
+      <td>0.000000</td>
+      <td>-1.000000</td>
+      <td>-5.000000</td>
+      <td>0.000000</td>
+      <td>JPM</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>3</td>
+      <td>2</td>
+      <td>4</td>
+      <td>0.333333</td>
+      <td>2.284647</td>
+      <td>20.561820</td>
+      <td>10.512646</td>
+      <td>-1.000000</td>
+      <td>-2.000000</td>
+      <td>11.280910</td>
+      <td>LLY</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.500000</td>
+      <td>-0.103216</td>
+      <td>-0.206432</td>
+      <td>0.793568</td>
+      <td>-1.000000</td>
+      <td>-1.000000</td>
+      <td>0.793568</td>
+      <td>XOM</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Combined Equity Curve</h2>
+
+<img src="multi_stock_equity_curve.png" width="900">
+
+<h2>Combined Drawdown</h2>
+
+<img src="multi_stock_drawdown.png" width="900">
+
+</body>
+</html>
