@@ -6,10 +6,9 @@ from src.plotting import plot_equity_curve, plot_drawdown
 from src.multi_report import generate_multi_stock_report
 
 
-TICKERS = [
-    "AAPL", "MSFT", "NVDA", "AMZN", "META",
-    "GOOGL", "AVGO", "JPM", "LLY", "XOM",
-]
+from src.universe import SP100_TICKERS 
+
+TICKERS = SP100_TICKERS
 
 
 def main():
