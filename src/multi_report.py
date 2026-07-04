@@ -1,4 +1,5 @@
 from pathlib import Path
+from src.portfolio_analysis import portfolio_summary, top_performers, bottom_performers
 
 import pandas as pd
 
@@ -10,6 +11,9 @@ def generate_multi_stock_report(results_dir: str = "results") -> None:
     output_dir = Path(results_dir)
 
     summary = pd.read_csv(output_dir / "multi_stock_summary.csv")
+    portfolio_stats = portfolio_summary(summary)
+    top_10 = top_performers(summary)
+    bottom_10 = bottom_performers(summary)
 
     equity_curve = "multi_stock_equity_curve.png"
     drawdown = "multi_stock_drawdown.png"
@@ -67,6 +71,18 @@ def generate_multi_stock_report(results_dir: str = "results") -> None:
 <body>
 
 <h1>Multi-Stock Strategy Report</h1>
+
+<h2>Portfolio Summary</h2>
+
+{pd.DataFrame([portfolio_stats]).to_html(index=False)}
+
+<h2>Top 10 Performers</h2>
+
+{top_10.to_html(index=False)}
+
+<h2>Bottom 10 Performers</h2>
+
+{bottom_10.to_html(index=False)}
 
 <h2>Performance Summary</h2>
 
