@@ -2,6 +2,8 @@ import pandas as pd
 
 from src.backtester import backtest_daily_strategy
 from src.performance import backtest_stats
+from src.plotting import plot_equity_curve, plot_drawdown
+from src.multi_report import generate_multi_stock_report
 
 
 TICKERS = [
@@ -39,6 +41,10 @@ def main():
         combined_trades = pd.concat(all_trades, ignore_index=True)
         combined_trades.to_csv("results/multi_stock_trade_log.csv", index=False)
 
+        plot_equity_curve(combined_trades, "results/multi_stock_equity_curve.png")
+        plot_drawdown(combined_trades, "results/multi_stock_drawdown.png")
+
+    generate_multi_stock_report()
     print("Multi-stock backtest complete. Results saved to results/")
 
 
