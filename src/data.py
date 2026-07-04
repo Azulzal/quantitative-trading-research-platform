@@ -42,13 +42,19 @@ def download_daily_data(symbol: str, period: str = "10y") -> pd.DataFrame:
     pd.DataFrame
         Daily market data with EMA and ATR columns.
     """
-    daily = yf.download(
-        symbol,
-        period=period,
-        interval="1d",
-        auto_adjust=False,
-        progress=False,
-    )
+    daily = pd.DataFrame()
+
+    for attempt in range(3):
+        daily = yf.download(
+            symbol,
+            period=period,
+            interval="1d",
+            auto_adjust=False,
+            progress=False,
+        )
+
+        if not daily.empty:
+            break
 
     if daily.empty:
         raise ValueError(f"No data found for {symbol}")
