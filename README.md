@@ -59,7 +59,7 @@ quantitative-trading-research-platform/
 Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/quantitative-trading-research-platform.git
+git clone https://github.com/MichaelLKennedy/quantitative-trading-research-platform.git
 cd quantitative-trading-research-platform
 ```
 
